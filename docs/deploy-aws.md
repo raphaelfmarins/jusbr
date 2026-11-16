@@ -110,7 +110,7 @@ set -a; source ../../.env; set +a      # exporta CLOUDFLARE_API_TOKEN sem exibi-
 
    for app in backend frontend; do
      docker buildx build --platform linux/arm64 \
-       -t "$REGISTRY/jusbr/$app:latest" --push ../../$app
+       -t "${REGISTRY}/jusbr/${app}:latest" --push "../../${app}"
    done
    ```
 
