@@ -13,9 +13,21 @@ make run          # ou: docker compose up --build
 - API: http://localhost:8080
 - Frontend: http://localhost:3000 (lista de links) e http://localhost:3000/analytics/{code}
 
+Se a porta 5432 já estiver em uso, rode com `DB_PORT=5433 make run`. Variáveis em [.env.example](.env.example).
+
+### Modo dev (só o Postgres no Docker)
+
+```bash
+DB_PORT=5433 docker compose up -d postgres
+cd backend && DB_URL=jdbc:postgresql://localhost:5433/shortener ./gradlew bootRun
+cd frontend && npm run dev
+```
+
 ## Testes
 
-Pré-requisitos: JDK 17+ e Node 20+. Docker rodando (Testcontainers).
+Pré-requisitos: JDK 17+ e Node 20+. Docker rodando (Testcontainers). No macOS o `Makefile` resolve o JDK 17 via `/usr/libexec/java_home`; em outros sistemas, exporte `JAVA_HOME`.
+
+CI: GitHub Actions ([.github/workflows/ci.yml](.github/workflows/ci.yml)) roda testes do backend, lint/testes/build do frontend e o build das imagens Docker.
 
 ```bash
 make test         # backend (JUnit + MockK + Testcontainers) e frontend (Vitest)
@@ -40,7 +52,7 @@ open http://localhost:3000/analytics/{code}
 | GET | `/api/urls` | Links mais recentes primeiro, com `clickCount` |
 | GET | `/api/stats/{code}` | `totalClicks`, `clicksByDay` (30 dias, UTC, zero-fill), `topReferrers` (top 10) |
 
-Erros retornam `{ "error": "..." }`.
+Erros retornam `{ "error": "..." }`. Body malformado (ex.: data inválida) retorna 400 `Malformed request body`. Em `topReferrers`, empates são ordenados alfabeticamente; referrer ausente aparece como `direct`.
 
 ## Stack e justificativa
 
@@ -58,3 +70,5 @@ Erros retornam `{ "error": "..." }`.
 - **Clique gravado de forma síncrona:** simples e consistente. Em escala, o próximo passo seria enfileirar (ex.: SQS) e agregar de forma assíncrona.
 - **IP:** primeiro valor de `X-Forwarded-For`, senão o endereço remoto.
 - **Sem autenticação:** fora do escopo; qualquer pessoa com o código vê o analytics.
+
+Débitos técnicos conhecidos em [docs/tech-debt.md](docs/tech-debt.md).
