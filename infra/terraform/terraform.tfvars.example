@@ -1,0 +1,7 @@
+aws_region   = "us-east-1"
+project_name = "url-shortener"
+image_tag    = "latest"
+
+# Safe defaults keep the database protected. To destroy everything, set:
+# db_deletion_protection = false
+# db_skip_final_snapshot = true
