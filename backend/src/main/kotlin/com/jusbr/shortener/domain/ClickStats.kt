@@ -24,6 +24,6 @@ object ClickStats {
         countsByReferrer
             .groupBy({ (referrer, _) -> referrer?.takeIf { it.isNotBlank() } ?: DIRECT }, { it.second })
             .map { (referrer, counts) -> ReferrerCount(referrer, counts.sum()) }
-            .sortedByDescending { it.count }
+            .sortedWith(compareByDescending<ReferrerCount> { it.count }.thenBy { it.referrer })
             .take(TOP_REFERRERS)
 }

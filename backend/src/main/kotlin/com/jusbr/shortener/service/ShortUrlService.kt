@@ -9,6 +9,7 @@ import com.jusbr.shortener.domain.ShortUrlNotFoundException
 import com.jusbr.shortener.domain.UrlValidator
 import com.jusbr.shortener.repository.ClickRepository
 import com.jusbr.shortener.repository.ShortUrlRepository
+import com.jusbr.shortener.repository.ShortUrlWithClicks
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import java.time.Clock
@@ -48,6 +49,8 @@ class ShortUrlService(
         clickRepository.save(Click(shortUrl.id!!, now, clickInfo.referrer, clickInfo.userAgent, clickInfo.ip))
         return shortUrl.originalUrl
     }
+
+    fun listWithClickCount(): List<ShortUrlWithClicks> = shortUrlRepository.findAllWithClickCount()
 
     fun findByCode(code: String): ShortUrl =
         shortUrlRepository.findByCode(code) ?: throw ShortUrlNotFoundException(code)
