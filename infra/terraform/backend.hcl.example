@@ -1,5 +1,5 @@
-bucket       = "CHANGE-ME-url-shortener-tfstate"
-key          = "url-shortener/terraform.tfstate"
+bucket       = "CHANGE-ME-jusbr-tfstate"
+key          = "jusbr/terraform.tfstate"
 region       = "us-east-1"
 use_lockfile = true
 encrypt      = true

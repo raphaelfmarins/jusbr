@@ -12,3 +12,6 @@ provider "aws" {
 data "aws_availability_zones" "available" {
   state = "available"
 }
+
+# Authenticates with the CLOUDFLARE_API_TOKEN environment variable.
+provider "cloudflare" {}

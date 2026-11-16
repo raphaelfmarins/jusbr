@@ -1,6 +1,11 @@
 output "app_url" {
-  description = "Public URL of the application (ALB)."
+  description = "Public URL of the application."
   value       = local.public_url
+}
+
+output "alb_dns_name" {
+  description = "ALB DNS name (target of the Cloudflare CNAME)."
+  value       = aws_lb.main.dns_name
 }
 
 output "ecr_repository_urls" {

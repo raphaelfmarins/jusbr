@@ -1,5 +1,5 @@
 locals {
-  public_url = "http://${aws_lb.main.dns_name}"
+  public_url = "https://${var.domain_name}"
   db_secret  = aws_db_instance.main.master_user_secret[0].secret_arn
 }
 
@@ -104,7 +104,7 @@ resource "aws_ecs_task_definition" "frontend" {
     essential    = true
     portMappings = [{ containerPort = 3000, protocol = "tcp" }]
     environment = [
-      # Server-side fetches go through the public ALB (simplest; no service discovery).
+      # Server-side fetches go through the public domain (simplest; no service discovery).
       { name = "BACKEND_URL", value = local.public_url },
     ]
     logConfiguration = {
@@ -145,7 +145,7 @@ resource "aws_ecs_service" "backend" {
     rollback = true
   }
 
-  depends_on = [aws_lb_listener.http]
+  depends_on = [aws_lb_listener.https]
 }
 
 resource "aws_ecs_service" "frontend" {

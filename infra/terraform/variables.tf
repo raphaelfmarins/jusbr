@@ -5,9 +5,9 @@ variable "aws_region" {
 }
 
 variable "project_name" {
-  description = "Prefix for resource names and value of the Project tag."
+  description = "Prefix for resource names and value of the Project cost tag."
   type        = string
-  default     = "url-shortener"
+  default     = "jusbr"
 }
 
 variable "vpc_cidr" {
@@ -56,4 +56,16 @@ variable "db_skip_final_snapshot" {
   description = "Skips the final snapshot when the RDS instance is destroyed."
   type        = bool
   default     = false
+}
+
+variable "cloudflare_zone_name" {
+  description = "Cloudflare zone that hosts the application domain."
+  type        = string
+  default     = "precohonesto.com"
+}
+
+variable "domain_name" {
+  description = "Public domain of the application."
+  type        = string
+  default     = "jusbr.precohonesto.com"
 }
