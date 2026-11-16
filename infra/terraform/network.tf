@@ -14,10 +14,11 @@ module "vpc" {
   public_subnets   = [for i in range(2) : cidrsubnet(var.vpc_cidr, 8, i)]
   database_subnets = [for i in range(2) : cidrsubnet(var.vpc_cidr, 8, i + 10)]
 
-  create_database_subnet_group = true
-  enable_nat_gateway           = false
-  enable_dns_hostnames         = true
-  enable_dns_support           = true
+  create_database_subnet_group       = true
+  create_database_subnet_route_table = true
+  enable_nat_gateway                 = false
+  enable_dns_hostnames               = true
+  enable_dns_support                 = true
 }
 
 resource "aws_security_group" "alb" {
