@@ -70,5 +70,3 @@ Erros retornam `{ "error": "..." }`. Body malformado (ex.: data inválida) retor
 - **Clique gravado de forma síncrona:** simples e consistente. Em escala, o próximo passo seria enfileirar (ex.: SQS) e agregar de forma assíncrona.
 - **IP:** primeiro valor de `X-Forwarded-For`, senão o endereço remoto.
 - **Sem autenticação:** fora do escopo; qualquer pessoa com o código vê o analytics.
-
-Débitos técnicos conhecidos em [docs/tech-debt.md](docs/tech-debt.md).
