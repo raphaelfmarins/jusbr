@@ -33,7 +33,7 @@ CI: GitHub Actions ([.github/workflows/ci.yml](.github/workflows/ci.yml)) roda t
 make test         # backend (JUnit + MockK + Testcontainers) e frontend (Vitest)
 ```
 
-Testes end-to-end da API: importe [docs/postman/url-shortener.postman_collection.json](docs/postman/url-shortener.postman_collection.json) com a stack no ar.
+Testes end-to-end da API (stack no ar): `make e2e` roda a collection [docs/postman/url-shortener.postman_collection.json](docs/postman/url-shortener.postman_collection.json) com newman. Também pode ser importada no Postman.
 
 ## Demo rápido
 
@@ -70,3 +70,7 @@ Erros retornam `{ "error": "..." }`. Body malformado (ex.: data inválida) retor
 - **Clique gravado de forma síncrona:** simples e consistente. Em escala, o próximo passo seria enfileirar (ex.: SQS) e agregar de forma assíncrona.
 - **IP:** primeiro valor de `X-Forwarded-For`, senão o endereço remoto.
 - **Sem autenticação:** fora do escopo; qualquer pessoa com o código vê o analytics.
+
+## Deploy na AWS
+
+Terraform em [infra/terraform/](infra/terraform/) (ECS Fargate + ALB + RDS PostgreSQL + ECR, DNS no Cloudflare). Passo a passo em [docs/deploy-aws.md](docs/deploy-aws.md).
